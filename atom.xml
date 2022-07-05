@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://VendettaMask.github.io</id>
+    <title>地球屋</title>
+    <updated>2022-07-05T15:00:47.046Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://VendettaMask.github.io"/>
+    <link rel="self" href="https://VendettaMask.github.io/atom.xml"/>
+    <subtitle>嘘，侧耳倾听~</subtitle>
+    <logo>https://VendettaMask.github.io/images/avatar.png</logo>
+    <icon>https://VendettaMask.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2022, 地球屋</rights>
+    <entry>
+        <title type="html"><![CDATA[光学设计]]></title>
+        <id>https://VendettaMask.github.io/post/guang-xue-she-ji/</id>
+        <link href="https://VendettaMask.github.io/post/guang-xue-she-ji/">
+        </link>
+        <updated>2022-06-29T15:54:33.000Z</updated>
+        <summary type="html"><![CDATA[<p>Zemax光学系统设计非序列模式</p>
+<h1 id="1-非序列模式">1. 非序列模式</h1>
+<p>Zemax软件可以使用<strong>序列模式</strong>和<strong>非序列模式</strong>两种模式来对光学系统进行设计<br>
+两种设计的区别：<br>
+序列模式 非序列模式</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Zemax光学系统设计非序列模式</p>
+<h1 id="1-非序列模式">1. 非序列模式</h1>
+<p>Zemax软件可以使用<strong>序列模式</strong>和<strong>非序列模式</strong>两种模式来对光学系统进行设计<br>
+两种设计的区别：<br>
+序列模式 非序列模式</p>
+<!-- more -->
+<p>非序列模式首先要选定参考物体<br>
+参考物体，又称Ref Object，该物体定义了非序列全局坐标与局部坐标之间的关系，在实际使用过程中，应先确定参考物体，再确认被参考物体（工作序列中应保证参考物体位于被参考物体序列前），在实际使用可分为绝对参考和相对参考。<br>
+绝对参考：在Ref Object参数栏中直接输入要参考的物体的序列编号（编辑器中物体所处的序列号），这样物体就建立了以参考物体为原点的参考坐标系，如图所示：<br>
+<img src="https://VendettaMask.github.io/post-images/1656519265325.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+</feed>

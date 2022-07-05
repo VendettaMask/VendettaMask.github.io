@@ -1,0 +1,189 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>光学设计 | 地球屋</title>
+<link rel="shortcut icon" href="https://VendettaMask.github.io/favicon.ico?v=1657033241791">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://VendettaMask.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="光学设计 | 地球屋 - Atom Feed" href="https://VendettaMask.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="Zemax光学系统设计非序列模式
+1. 非序列模式
+Zemax软件可以使用序列模式和非序列模式两种模式来对光学系统进行设计
+两种设计的区别：
+序列模式 非序列模式
+
+非序列模式首先要选定参考物体
+参考物体，又称Ref Object，该物体定..." />
+    <meta name="keywords" content="光学设计,zemax" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://VendettaMask.github.io">
+  <img class="avatar" src="https://VendettaMask.github.io/images/avatar.png?v=1657033241791" alt="">
+  </a>
+  <h1 class="site-title">
+    地球屋
+  </h1>
+  <p class="site-description">
+    嘘，侧耳倾听~
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="VendettaMask" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              光学设计
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-06-29
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://VendettaMask.github.io/tag/N55L8ROXk/" class="post-tag">
+                  # 光学设计
+                </a>
+              
+                <a href="https://VendettaMask.github.io/tag/xccatPvT1r/" class="post-tag">
+                  # zemax
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://VendettaMask.github.io/post-images/guang-xue-she-ji.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>Zemax光学系统设计非序列模式</p>
+<h1 id="1-非序列模式">1. 非序列模式</h1>
+<p>Zemax软件可以使用<strong>序列模式</strong>和<strong>非序列模式</strong>两种模式来对光学系统进行设计<br>
+两种设计的区别：<br>
+序列模式 非序列模式</p>
+<!-- more -->
+<p>非序列模式首先要选定参考物体<br>
+参考物体，又称Ref Object，该物体定义了非序列全局坐标与局部坐标之间的关系，在实际使用过程中，应先确定参考物体，再确认被参考物体（工作序列中应保证参考物体位于被参考物体序列前），在实际使用可分为绝对参考和相对参考。<br>
+绝对参考：在Ref Object参数栏中直接输入要参考的物体的序列编号（编辑器中物体所处的序列号），这样物体就建立了以参考物体为原点的参考坐标系，如图所示：<br>
+<img src="https://VendettaMask.github.io/post-images/1656519265325.png" alt="" loading="lazy"></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#1-%E9%9D%9E%E5%BA%8F%E5%88%97%E6%A8%A1%E5%BC%8F">1. 非序列模式</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://VendettaMask.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
