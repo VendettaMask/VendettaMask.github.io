@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>地球屋博客编辑器</title>
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <div>
+          <h1>地球屋</h1>
+          <p>博客编辑器</p>
+        </div>
+        <button id="newPost" class="icon-button" title="新建文章">＋</button>
+      </div>
+      <div id="postList" class="post-list"></div>
+    </aside>
+
+    <main class="workspace">
+      <section class="meta-panel">
+        <div class="meta-grid">
+          <label>
+            <span>标题</span>
+            <input id="title" type="text" placeholder="文章标题">
+          </label>
+          <label>
+            <span>文件名</span>
+            <input id="slug" type="text" placeholder="自动生成，例如 opu-afm">
+          </label>
+          <label>
+            <span>日期</span>
+            <input id="date" type="date">
+          </label>
+          <label>
+            <span>标签</span>
+            <input id="tags" type="text" placeholder="AFM, OPU, 光学工程">
+          </label>
+          <label class="wide">
+            <span>描述</span>
+            <input id="description" type="text" placeholder="显示在 RSS 和页面摘要里的简短说明">
+          </label>
+          <label>
+            <span>封面图</span>
+            <input id="featureImage" type="text" placeholder="post-images/example.png">
+          </label>
+        </div>
+      </section>
+
+      <section class="toolbar" aria-label="编辑工具栏">
+        <button data-command="formatBlock" data-value="P" title="正文">正文</button>
+        <button data-command="formatBlock" data-value="H1" title="一级标题">H1</button>
+        <button data-command="formatBlock" data-value="H2" title="二级标题">H2</button>
+        <button data-command="bold" title="加粗"><strong>B</strong></button>
+        <button data-command="italic" title="斜体"><em>I</em></button>
+        <button data-command="insertUnorderedList" title="无序列表">列表</button>
+        <button id="linkButton" title="插入链接">链接</button>
+        <button id="imageButton" title="插入图片">图片</button>
+        <input id="imageInput" type="file" accept="image/*" hidden>
+        <div class="spacer"></div>
+        <button id="saveButton" class="primary">保存</button>
+        <button id="buildButton">生成页面</button>
+      </section>
+
+      <section class="editor-shell">
+        <article id="editor" class="editor" contenteditable="true" spellcheck="false">
+          <p>开始写文章。</p>
+        </article>
+      </section>
+
+      <section id="status" class="status">准备就绪</section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
