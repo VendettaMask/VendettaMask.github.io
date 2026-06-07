@@ -96,6 +96,15 @@ def render_inline(value: str) -> str:
     return value
 
 
+def is_table_separator(line: str) -> bool:
+    cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+    return bool(cells) and all(re.fullmatch(r":?-{3,}:?", cell or "") for cell in cells)
+
+
+def split_table_row(line: str) -> list[str]:
+    return [cell.strip() for cell in line.strip().strip("|").split("|")]
+
+
 def render_markdown(markdown: str) -> str:
     lines = markdown.replace("\r\n", "\n").split("\n")
     output: list[str] = []
@@ -103,7 +112,11 @@ def render_markdown(markdown: str) -> str:
     code: list[str] = []
     in_code = False
     in_list = False
+    list_type = ""
     in_quote = False
+    in_table = False
+    table_header: list[str] = []
+    table_rows: list[list[str]] = []
 
     def flush_paragraph() -> None:
         nonlocal paragraph
@@ -112,10 +125,11 @@ def render_markdown(markdown: str) -> str:
             paragraph = []
 
     def close_list() -> None:
-        nonlocal in_list
+        nonlocal in_list, list_type
         if in_list:
-            output.append("</ul>")
+            output.append(f"</{list_type}>")
             in_list = False
+            list_type = ""
 
     def close_quote() -> None:
         nonlocal in_quote
@@ -123,11 +137,34 @@ def render_markdown(markdown: str) -> str:
             output.append("</blockquote>")
             in_quote = False
 
-    for line in lines:
+    def close_table() -> None:
+        nonlocal in_table, table_header, table_rows
+        if not in_table:
+            return
+        header_html = "".join(f"<th>{render_inline(cell)}</th>" for cell in table_header)
+        row_html = "\n".join(
+            "<tr>" + "".join(f"<td>{render_inline(cell)}</td>" for cell in row) + "</tr>"
+            for row in table_rows
+        )
+        output.append(
+            '<div class="table-wrapper"><table>\n'
+            f"<thead><tr>{header_html}</tr></thead>\n"
+            f"<tbody>\n{row_html}\n</tbody>\n"
+            "</table></div>"
+        )
+        in_table = False
+        table_header = []
+        table_rows = []
+
+    index = 0
+    while index < len(lines):
+        line = lines[index]
         if line.strip() == "<!-- more -->":
             flush_paragraph()
             close_list()
             close_quote()
+            close_table()
+            index += 1
             continue
 
         if line.startswith("```"):
@@ -139,53 +176,96 @@ def render_markdown(markdown: str) -> str:
                 flush_paragraph()
                 close_list()
                 close_quote()
+                close_table()
                 in_code = True
+            index += 1
             continue
 
         if in_code:
             code.append(line)
+            index += 1
             continue
 
         if not line.strip():
             flush_paragraph()
             close_list()
             close_quote()
+            close_table()
+            index += 1
             continue
+
+        if (
+            "|" in line
+            and index + 1 < len(lines)
+            and is_table_separator(lines[index + 1])
+        ):
+            flush_paragraph()
+            close_list()
+            close_quote()
+            close_table()
+            in_table = True
+            table_header = split_table_row(line)
+            index += 2
+            continue
+
+        if in_table:
+            if "|" in line:
+                table_rows.append(split_table_row(line))
+                index += 1
+                continue
+            close_table()
 
         heading = re.match(r"^(#{1,6})\s+(.+)$", line)
         if heading:
             flush_paragraph()
             close_list()
             close_quote()
+            close_table()
             level = len(heading.group(1))
             output.append(f"<h{level}>{render_inline(heading.group(2))}</h{level}>")
+            index += 1
             continue
 
         quote = re.match(r"^>\s+(.+)$", line)
         if quote:
             flush_paragraph()
             close_list()
+            close_table()
             if not in_quote:
                 output.append("<blockquote>")
                 in_quote = True
             output.append("<p>" + render_inline(quote.group(1)) + "</p>")
+            index += 1
             continue
 
-        item = re.match(r"^[-*]\s+(.+)$", line)
-        if item:
+        bullet = re.match(r"^[-*]\s+(.+)$", line)
+        ordered = re.match(r"^\d+[.)]\s+(.+)$", line)
+        if bullet or ordered:
             flush_paragraph()
             close_quote()
+            close_table()
+            target_list_type = "ol" if ordered else "ul"
             if not in_list:
-                output.append("<ul>")
+                output.append(f"<{target_list_type}>")
                 in_list = True
-            output.append("<li>" + render_inline(item.group(1)) + "</li>")
+                list_type = target_list_type
+            elif list_type != target_list_type:
+                close_list()
+                output.append(f"<{target_list_type}>")
+                in_list = True
+                list_type = target_list_type
+            item_text = (ordered or bullet).group(1)
+            output.append("<li>" + render_inline(item_text) + "</li>")
+            index += 1
             continue
 
         paragraph.append(line.strip())
+        index += 1
 
     flush_paragraph()
     close_list()
     close_quote()
+    close_table()
     if in_code:
         output.append("<pre><code>" + html.escape("\n".join(code)) + "</code></pre>")
 

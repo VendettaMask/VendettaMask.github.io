@@ -276,6 +276,26 @@ input:focus,
   color: inherit;
 }
 
+.editor table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 15px;
+}
+
+.editor th,
+.editor td {
+  min-width: 120px;
+  border: 1px solid var(--line);
+  padding: 9px 10px;
+  vertical-align: top;
+}
+
+.editor th {
+  background: #f3f6fa;
+  font-weight: 700;
+}
+
 .status {
   min-height: 34px;
   padding: 8px 22px;

@@ -154,6 +154,17 @@ async function buildSite() {
   setStatus(result.output.trim().split("\n").slice(-1)[0] || "生成完成");
 }
 
+async function publishSite() {
+  await savePost();
+  if (!confirm("确定要生成、提交并推送到 GitHub Pages 吗？")) {
+    return;
+  }
+  setStatus("正在发布到 GitHub Pages...");
+  const result = await api("/api/publish", { method: "POST", body: "{}" });
+  const tail = result.output.trim().split("\n").filter(Boolean).slice(-3).join(" · ");
+  setStatus(tail || "发布完成");
+}
+
 function execCommand(command, value = null) {
   fields.editor.focus();
   document.execCommand(command, false, value);
@@ -164,6 +175,57 @@ function createLink() {
   const url = prompt("链接地址");
   if (!url) return;
   execCommand("createLink", url);
+}
+
+function insertNode(node) {
+  fields.editor.focus();
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0) {
+    fields.editor.appendChild(node);
+    return;
+  }
+  const range = selection.getRangeAt(0);
+  range.deleteContents();
+  range.insertNode(node);
+  range.setStartAfter(node);
+  range.collapse(true);
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
+
+function insertCodeBlock() {
+  const pre = document.createElement("pre");
+  const code = document.createElement("code");
+  code.textContent = "在这里写代码";
+  pre.appendChild(code);
+  insertNode(pre);
+  markDirty();
+}
+
+function insertTable() {
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const tbody = document.createElement("tbody");
+  const headerRow = document.createElement("tr");
+  ["参数", "说明", "备注"].forEach((text) => {
+    const th = document.createElement("th");
+    th.textContent = text;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+  for (let rowIndex = 0; rowIndex < 2; rowIndex += 1) {
+    const row = document.createElement("tr");
+    for (let columnIndex = 0; columnIndex < 3; columnIndex += 1) {
+      const td = document.createElement("td");
+      td.textContent = "";
+      row.appendChild(td);
+    }
+    tbody.appendChild(row);
+  }
+  table.appendChild(thead);
+  table.appendChild(tbody);
+  insertNode(table);
+  markDirty();
 }
 
 function fileToDataURL(file) {
@@ -193,18 +255,7 @@ function insertImage(src, markdownSrc, alt = "") {
   img.src = src;
   img.alt = alt;
   img.dataset.mdSrc = markdownSrc;
-  const selection = window.getSelection();
-  if (!selection || selection.rangeCount === 0) {
-    fields.editor.appendChild(img);
-    return;
-  }
-  const range = selection.getRangeAt(0);
-  range.deleteContents();
-  range.insertNode(img);
-  range.setStartAfter(img);
-  range.collapse(true);
-  selection.removeAllRanges();
-  selection.addRange(range);
+  insertNode(img);
 }
 
 function escapeHtml(value) {
@@ -220,9 +271,12 @@ document.querySelectorAll("[data-command]").forEach((button) => {
 });
 
 $("#linkButton").addEventListener("click", createLink);
+$("#codeButton").addEventListener("click", insertCodeBlock);
+$("#tableButton").addEventListener("click", insertTable);
 $("#newPost").addEventListener("click", newPost);
 $("#saveButton").addEventListener("click", () => savePost().catch((error) => setStatus(error.message, "error")));
 $("#buildButton").addEventListener("click", () => buildSite().catch((error) => setStatus(error.message, "error")));
+$("#publishButton").addEventListener("click", () => publishSite().catch((error) => setStatus(error.message, "error")));
 
 $("#imageButton").addEventListener("click", () => $("#imageInput").click());
 $("#imageInput").addEventListener("change", (event) => {
