@@ -45,7 +45,16 @@ python3 scripts/build-posts.py
 echo
 echo "2/4 检查本地改动..."
 if git diff --quiet && git diff --cached --quiet; then
-  echo "没有检测到需要发布的新内容。"
+  if [ "$(git rev-list --count "origin/$branch..HEAD" 2>/dev/null || echo 0)" -gt 0 ]; then
+    echo "没有新的文件改动，但有本地提交尚未推送。"
+    echo
+    echo "4/4 推送到 GitHub Pages..."
+    git push origin "$branch"
+    echo
+    echo "发布完成！"
+  else
+    echo "没有检测到需要发布的新内容。"
+  fi
   pause
   exit 0
 fi
