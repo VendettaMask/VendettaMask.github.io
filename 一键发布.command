@@ -20,6 +20,10 @@ fail() {
 
 trap fail ERR
 
+git_network() {
+  git -c http.lowSpeedLimit=1 -c http.lowSpeedTime=20 "$@"
+}
+
 echo "== 地球屋：一键发布 =="
 echo
 
@@ -49,7 +53,7 @@ if git diff --quiet && git diff --cached --quiet; then
     echo "没有新的文件改动，但有本地提交尚未推送。"
     echo
     echo "4/4 推送到 GitHub Pages..."
-    git push origin "$branch"
+    git_network push origin "$branch"
     echo
     echo "发布完成！"
   else
@@ -71,8 +75,8 @@ git commit -m "$commit_message"
 
 echo
 echo "4/4 推送到 GitHub Pages..."
-git pull --rebase origin "$branch"
-git push origin "$branch"
+git_network pull --rebase origin "$branch"
+git_network push origin "$branch"
 
 echo
 echo "发布完成！"
