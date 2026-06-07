@@ -264,6 +264,22 @@ def text_response(handler: BaseHTTPRequestHandler, text: str, status: int = 200,
 
 
 class BlogEditorHandler(BaseHTTPRequestHandler):
+    def do_HEAD(self) -> None:
+        parsed = urlparse(self.path)
+        path = unquote(parsed.path)
+        target = STATIC_DIR / "index.html" if path in {"/", "/index.html"} else STATIC_DIR / path.lstrip("/")
+        if path.startswith("/post-images/"):
+            target = IMAGE_DIR / path.split("/")[-1]
+        if target.exists() and target.is_file():
+            content_type = mimetypes.guess_type(target.name)[0] or "application/octet-stream"
+            self.send_response(200)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(target.stat().st_size))
+            self.end_headers()
+            return
+        self.send_response(404)
+        self.end_headers()
+
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
         path = unquote(parsed.path)
