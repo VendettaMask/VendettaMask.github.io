@@ -5,6 +5,9 @@ tags: 光学设计, zemax
 description: Zemax 光学系统设计非序列模式
 feature_image: post-images/guang-xue-she-ji.png
 ---
+
+<!-- more -->
+
 Zemax光学系统设计非序列模式
 
 # 1. 非序列模式
@@ -15,7 +18,7 @@ Zemax软件可以使用**序列模式**和**非序列模式**两种模式来对�
 
 序列模式 非序列模式
 
-<!-- more -->
+
 
 非序列模式首先要选定参考物体
 
