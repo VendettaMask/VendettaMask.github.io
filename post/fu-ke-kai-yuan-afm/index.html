@@ -1,22 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://VendettaMask.github.io</id>
-    <title>地球屋</title>
-    <updated>2026-06-07T00:00:00Z</updated>
-    <generator>scripts/build-posts.py</generator>
-    <link rel="alternate" href="https://VendettaMask.github.io"/>
-    <link rel="self" href="https://VendettaMask.github.io/atom.xml"/>
-    <subtitle>嘘，侧耳倾听~</subtitle>
-    <logo>https://VendettaMask.github.io/images/avatar.png</logo>
-    <icon>https://VendettaMask.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2026, 地球屋</rights>
-    <entry>
-        <title type="html"><![CDATA[基于 OPU 复刻开源 AFM 项目]]></title>
-        <id>https://VendettaMask.github.io/post/fu-ke-kai-yuan-afm/</id>
-        <link href="https://VendettaMask.github.io/post/fu-ke-kai-yuan-afm/"></link>
-        <updated>2026-06-07T00:00:00Z</updated>
-        <summary type="html"><![CDATA[]]></summary>
-        <content type="html"><![CDATA[<p>原子力显微镜（Atomic Force Microscope, AFM）不是用物镜直接“看见”样品，而是用探针和样品表面的相互作用来重建形貌。</p>
+<html>
+  <head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>基于 OPU 复刻开源 AFM 项目 | 地球屋</title>
+<link rel="shortcut icon" href="https://VendettaMask.github.io/favicon.ico?v=1657033241791">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="../../styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="基于 OPU 复刻开源 AFM 项目 | 地球屋 - Atom Feed" href="https://VendettaMask.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<meta name="description" content="基于光学拾取头 OPU 复刻开源原子力显微镜" />
+  </head>
+  <body>
+    <div class="dream-bg" aria-hidden="true">
+      <div class="dream-bg__stars"></div>
+      <div class="dream-bg__mist"></div>
+    </div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="../../">
+  <img class="avatar" src="../../images/avatar.png?v=1657033241791" alt="">
+  </a>
+  <h1 class="site-title">地球屋</h1>
+  <p class="site-description">嘘，侧耳倾听~</p>
+  <div class="menu-container">
+    <a href="../../" class="menu">首页</a>
+    <a href="../../archives" class="menu">归档</a>
+    <a href="../../tags" class="menu">标签</a>
+    <a href="../../post/about" class="menu">关于</a>
+  </div>
+</div>
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">基于 OPU 复刻开源 AFM 项目</h2>
+            <div class="post-info">
+              <span>2026-06-07</span>
+              <a href="../../tag/afm/" class="post-tag"># AFM</a>
+<a href="../../tag/tag-2a0d6b99e6/" class="post-tag"># 开源硬件</a>
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+<p>原子力显微镜（Atomic Force Microscope, AFM）不是用物镜直接“看见”样品，而是用探针和样品表面的相互作用来重建形貌。</p>
 <p>AFM 的基本工作过程可以理解成“用一根很细的探针摸表面”。探针固定在微悬臂梁末端，当探针靠近样品时，原子间的范德华力、静电力、毛细力或短程排斥力会让悬臂梁发生微小弯曲，或者让悬臂梁的振动幅值、相位、频率发生变化。系统用光学读出、电容读出、压阻读出等方式测量这个变化，再通过 Z 轴反馈让探针和样品之间的相互作用保持在设定值。</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/AFM_schematic_%28EN%29.svg" alt="AFM 光学读出工作原理示意" loading="lazy"></p>
 <blockquote>
@@ -186,22 +211,18 @@
 <p>作为光学工程师，我更适合从 OPU 读出模块切入，而不是一开始就把机械、电控、软件全部铺开。只要先把“OPU 激光 - 物镜执行器 - 反射目标 - 探测器信号 - 聚焦误差信号”这条链路调通，后面的扫描平台和反馈控制才有可靠的观察窗口。</p>
 <p>所以第一版复刻路线应该是：</p>
 <p>1. 先拆解和表征 OPU。 2. 再做 OPU 信号采集台架。 3. 然后做 Z 向接近机构。 4. 接着做低速扫描。 5. 最后再考虑更复杂的控制器和成像模式。</p>
-<p>AFM 的复刻难点不在某一个模块特别神秘，而在每个模块都要求足够稳定。OPU 方案的优势是集成度高，难点是黑盒程度也更高。这个项目适合慢慢推进，每完成一个可测量的小闭环，就把它记录下来。</p>]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[光学设计]]></title>
-        <id>https://VendettaMask.github.io/post/guang-xue-she-ji/</id>
-        <link href="https://VendettaMask.github.io/post/guang-xue-she-ji/"></link>
-        <updated>2022-06-29T00:00:00Z</updated>
-        <summary type="html"><![CDATA[]]></summary>
-        <content type="html"><![CDATA[<p>Zemax光学系统设计非序列模式</p>
-<h1>1. 非序列模式</h1>
-<p>Zemax软件可以使用<strong>序列模式</strong>和<strong>非序列模式</strong>两种模式来对光学系统进行设计</p>
-<p>两种设计的区别：</p>
-<p>序列模式 非序列模式</p>
-<p>非序列模式首先要选定参考物体</p>
-<p>参考物体，又称Ref Object，该物体定义了非序列全局坐标与局部坐标之间的关系，在实际使用过程中，应先确定参考物体，再确认被参考物体（工作序列中应保证参考物体位于被参考物体序列前），在实际使用可分为绝对参考和相对参考。</p>
-<p>绝对参考：在Ref Object参数栏中直接输入要参考的物体的序列编号（编辑器中物体所处的序列号），这样物体就建立了以参考物体为原点的参考坐标系，如图所示：</p>
-<p><img src="../../post-images/1656519265325.png" alt="Zemax 非序列参考物体示意" loading="lazy"></p>]]></content>
-    </entry>
-</feed>
+<p>AFM 的复刻难点不在某一个模块特别神秘，而在每个模块都要求足够稳定。OPU 方案的优势是集成度高，难点是黑盒程度也更高。这个项目适合慢慢推进，每完成一个可测量的小闭环，就把它记录下来。</p>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="site-footer">
+  Powered by <a href="https://VendettaMask.github.io" target="_blank">地球屋</a>
+  <a class="rss" href="https://VendettaMask.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+      </div>
+    </div>
+  </body>
+</html>
